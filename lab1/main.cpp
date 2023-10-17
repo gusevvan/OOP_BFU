@@ -3,6 +3,7 @@
 #include "integral_solver.h"
 
 double f(double x) {
+    //Функция, от которой будем брать интеграл.
     return cos(x);
 }
 
