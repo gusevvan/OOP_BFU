@@ -1,4 +1,4 @@
-#include "factories.h"
+#include "../inc/factories.h"
 
 namespace ui {
     Form* WindowsControlFactory::createForm(double x_pos, double y_pos, double x_scale, double y_scale) {

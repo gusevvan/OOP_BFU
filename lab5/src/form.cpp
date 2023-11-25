@@ -1,4 +1,4 @@
-#include "form.h"
+#include "../inc/form.h"
 
 namespace ui {
     Form::Form(double x_pos, double y_pos, double x_scale, double y_scale, const std::string& mark):

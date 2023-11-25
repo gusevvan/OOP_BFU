@@ -1,5 +1,5 @@
 #include <iostream>
-#include "factories.h"
+#include "inc/factories.h"
 #include <cstring>
 
 int main() {

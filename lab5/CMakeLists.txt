@@ -3,4 +3,4 @@ project(lab5)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(lab5 main.cpp controls.h form.h factories.h form.cpp controls.cpp factories.cpp)
+add_executable(lab5 main.cpp inc/controls.h inc/form.h inc/factories.h src/form.cpp src/controls.cpp src/factories.cpp)
