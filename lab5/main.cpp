@@ -1,38 +1,52 @@
 #include <iostream>
-#include "inc/factories.h"
-#include <cstring>
+#include "Data.h"
+
+using namespace lrs;
+
+void f(const char* propName, const std::string& new_value);
+void validate(const char* propName, int newValue, bool& cancel);
+void col_changed(const char* colName, ChangeStatus changeStatus, int newValue, int oldValue);
 
 int main() {
-    std::string os_mark;
-    char *ostype = getenv("OSTYPE");
-    if (ostype == NULL) {
-        ostype = getenv("windir");
-        if (ostype != NULL) {
-            os_mark = "windows";
+    MyClass cls{};
+    cls.addNotifyPropertyChangedListener(f);
+    cls.addNotifyPropertyChangingListener(validate);
+    cls.addNotifyCollectionChangedListener(col_changed);
+    cls.setName("ababa");
+    cls.setValue(1);
+    cls.setValue(-1);
+    cls.addValueToNumbers(1);
+    cls.addValueToNumbers(2);
+    cls.removeValueFromNumbers(2);
+    cls.changeValueInNumbers(1, 3);
+    cls.removeValueFromNumbers(4);
+}
+
+void f(const char* propName, const std::string& newValue) {
+    std::cout << "Property \"" << propName << "\" has changed to " << newValue << "\n";
+}
+
+void validate(const char* propName, int newValue, bool& cancel) {
+    if (newValue < 0) {
+        cancel = true;
+        return;
+    }
+    std::cout << "Property \"" << propName << "\" has changed to " << newValue << "\n";
+}
+
+void col_changed(const char* colName, ChangeStatus changeStatus, int oldValue, int newValue) {
+    switch(changeStatus) {
+        case ChangeStatus::Added: {
+            std::cout << "Add " << newValue << " to collection \"" << colName << "\"\n";
+            break;
         }
-    } else {
-        if (strcmp(ostype, "linux") == 0) {
-            os_mark = "linux";
-        } else {
-            os_mark = "macos";
+        case ChangeStatus::Removed: {
+            std::cout << "Remove " << newValue << " from collection \"" << colName << "\"\n";
+            break;
+        }
+        case ChangeStatus::ItemChanged: {
+            std::cout << "Change " << oldValue << " to " << newValue << " in collection\"" << colName << "\"\n";
+            break;
         }
     }
-    ui::ControlFactory* factory;
-    if (os_mark == "windows") {
-        factory = new ui::WindowsControlFactory;
-    } else {
-        if (os_mark == "linux") {
-            factory = new ui::LinuxControlFactory;
-        } else {
-            factory = new ui::MacOSControlFactory;
-        }
-    }
-    ui::Form* form = factory->createForm(0, 0, 100, 100);
-    ui::TextBox* textBox = factory->createTextBox(0, 0, 10, 20, "text");
-    ui::Button* button = factory->createButton(0, 0, 30, 20, "text");
-    ui::Label* label = factory->createLabel(0, 0, 10, 30, "text");
-    label->setText("some text");
-    form->addControl(textBox);
-    form->addControl(button);
-    form->addControl(label);
 }

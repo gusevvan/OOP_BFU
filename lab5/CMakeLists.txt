@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
-project(lab5)
+project(lab4)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(lab5 main.cpp inc/controls.h inc/form.h inc/factories.h src/form.cpp src/controls.cpp src/factories.cpp)
+add_executable(lab4 main.cpp Data.h Data.cpp)
